@@ -1,0 +1,26 @@
+name: Daily Finance Email
+
+on:
+  schedule:
+    - cron: "0 9 * * *"  # Tous les jours à 9h UTC
+  workflow_dispatch:  # Permet aussi de le lancer manuellement
+
+jobs:
+  send_report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python main.py
