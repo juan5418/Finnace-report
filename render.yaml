@@ -1,0 +1,7 @@
+services:
+  - type: cron
+    name: daily-finance-email
+    env: python
+    schedule: "0 9 * * *"  # Exécuté tous les jours à 9h UTC
+    buildCommand: pip install -r requirements.txt
+    startCommand: python finance_report.py
